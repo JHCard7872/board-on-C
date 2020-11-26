@@ -1,4 +1,11 @@
 ﻿#include <stdio.h>
+#include <windows.h>
+
+#define WHITE 7
+#define BLUE 1
+#define GREEN 2
+#define RED 4
+#define YELLOW 6
 
 struct board {
 	char name[16];
@@ -12,6 +19,7 @@ struct board {
 };
 
 void print_board(void);
+void printcolor(int color);
 
 int main(void) {
 
@@ -41,29 +49,60 @@ void print_board(void) {
 	"┠   10  ┫                                                               ┠   35  ┫",
 	"┃       ┃                                                               ┃       ┃",
 	"┠   9   ╋   8   ┳   7   ┳   6   ┳   5   ┳   4   ┳   3   ┳   2   ┳   1   ╋   0   ┫",
-	"┃       ┃       ┃       ┃       ┃       ┃       ┃       ┃       ┃       ┃       ┃",
+	"┃       ┃       ┃       ┃       ┃       ┃       ┃       ┃       ┃ ountry┃ ountry┃",
 	"┗   ─   ┸   ─   ┻   ─   ┻   ─   ┻   ─   ┻   ─   ┻   ─   ┻   ─   ┻   ─   ┻   ─   ┛"
 	};
-	for (int i = 0; i < 20; i=i+2)
+	for (int i = 0; i < 20; i = i + 2)
 	{
 		printf("%s\n", boardpan[i]);
 		if (i == 0)
 		{
-			printf("   %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c \n"
-				, '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*');
+			for (int j = 0; j < 10; j++)
+			{
+				printf("   "); printcolor(BLUE); printf("%c", '*'); printcolor(RED); printf("%c", '*'); printcolor(GREEN); printf("%c", '*'); printcolor(YELLOW); printf("%c ", '*'); printcolor(WHITE);
+			}
+			
 		}
-		else if (i > 0&& i<18)
+		else if (i > 0 && i < 18)
 		{
-			printf("   %c%c%c%c                                                                    %c%c%c%c\n", '*', '*', '*', '*', '*', '*', '*', '*');
+			printf("   "); printcolor(BLUE); printf("%c", '*'); printcolor(RED); printf("%c", '*'); printcolor(GREEN); printf("%c", '*'); printcolor(YELLOW); printf("%c", '*'); printcolor(WHITE);
+			printf("                                                                 ");
+			printf("   "); printcolor(BLUE); printf("%c", '*'); printcolor(RED); printf("%c", '*'); printcolor(GREEN); printf("%c", '*'); printcolor(YELLOW); printf("%c", '*'); printcolor(WHITE);
 		}
 		else
 		{
-			printf("   %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c    %c%c%c%c \n"
-				, '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*');
+			for (int j = 0; j < 10; j++)
+			{
+				printf("   "); printcolor(BLUE); printf("%c", '*'); printcolor(RED); printf("%c", '*'); printcolor(GREEN); printf("%c", '*'); printcolor(YELLOW); printf("%c ", '*'); printcolor(WHITE);
+			}
 		}
+		printf("\n");
 		printf("%s\n", boardpan[i + 1]);
 		printf("            \n");
 	}
 	printf("%s\n", boardpan[20]);
-	
+
+}
+
+void printcolor(int color) {
+	if (color == WHITE)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+	}
+	else if (color == BLUE)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BLUE);
+	}
+	else if (color == GREEN)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
+	}
+	else if (color == RED)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), RED);
+	}
+	else if (color == YELLOW)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), YELLOW);
+	}
 }
