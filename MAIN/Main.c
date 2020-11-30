@@ -12,21 +12,22 @@
 
 
 struct board { // 보드셀 구조체
-	char name[16]; // 이름 
-	int num; // 번호 
-	int build; // 건물
-	int value; // 땅값 
-	int pass_value; // 통행료 
-	int sell_value; // 팔때가격
-	struct player* get_player; // 보유 플레이어
+	char name[16];
+	int num;
+	int build;
+	int value;
+	int pass_value;
+	int sell_value;
+	struct player* get_player;
 };
 
 struct player { // 플레이어 구조체
-	int haveBoard; // 가지고있는 땅의 수
-	int color; // 색
-	int money; // 보유금액
-	int location; // 위치
-	struct board* player_board[20]; // 보유 건물구조체
+	int haveBoard;
+	int color;
+	int money;
+	int location;
+	int count;
+	struct board* player_board[20];
 };
 
 struct board boardCell[36] = { // 보드셀의 초기화
@@ -119,14 +120,17 @@ void printcolor(int color); // 색 바꿔주는 함수
 void movePlayer(struct player* playerLocation, int playerNum); // 플레이어의 위치에 따른 문자열 * 변화
 void printHaveBoard(int i, int j, int plaer, struct player* playerHaveBoard);
 void printBuild(struct player* playerBoard);
+int Dice();
+int Dice_Move(struct player* player_locate, int* i, int k);
+void Island(int* count);
 
 int main(void) {
+	int k;
 
-	play[0].location = 4;
-	play[1].location = 11;
-	play[2].location = 20;
-	play[3].location = 32;
-
+	play[0].location = 0;
+	play[1].location = 0;
+	play[2].location = 0;
+	play[3].location = 0;
 	play[0].haveBoard = 5;
 	play[1].haveBoard = 3;
 	play[2].haveBoard = 6;
@@ -136,66 +140,203 @@ int main(void) {
 	play[2].money = 34000;
 	play[1].money = 430000;
 	play[3].money = 7620000;
-	for (int i = 0; i < 36; i++)
-	{
-		boardCell[i].build = 4;
+
+	for (int i = 0; i < 4; i++) {
+		k = 0;
+		printf("주사위 굴리기\n");
+		if (Dice_Move(&play[i], &k, i + 1)) {
+			for (int i = 0; i < 36; i++)
+			{
+				boardCell[i].build = 4;
+			}
+			for (int i = 0; i < 5; i++)
+			{
+				play[0].player_board[i] = &boardCell[i + 3];
+				boardCell[i + 3].get_player = &play[0];
+			}
+			for (int i = 0; i < 3; i++)
+			{
+				play[1].player_board[i] = &boardCell[i + 13];
+				boardCell[i + 13].get_player = &play[1];
+			}
+			for (int i = 0; i < 6; i++)
+			{
+				play[2].player_board[i] = &boardCell[i + 28];
+				boardCell[i + 28].get_player = &play[2];
+			}
+			for (int i = 0; i < 1; i++)
+			{
+				play[3].player_board[i] = &boardCell[i + 20];
+				boardCell[i + 20].get_player = &play[3];
+			}
+			play[0].color = 1;
+			play[3].color = YELLOW;
+			play[1].color = RED;
+			play[2].color = GREEN;
+
+
+
+
+
+
+			printBuild(&play[0]);
+			printBuild(&play[1]);
+			printBuild(&play[2]);
+			printBuild(&play[3]);
+			movePlayer(&play[0], 1);
+			movePlayer(&play[1], 2);
+			movePlayer(&play[2], 3);
+			movePlayer(&play[3], 4);
+
+			//y축 21칸 x축 81칸
+			print_board();
+			// 나중에 플레이어 위치, 땅값 구현할것.
+			if (Dice_Move(&play[i], &k, i + 1)) {
+				for (int i = 0; i < 36; i++)
+				{
+					boardCell[i].build = 4;
+				}
+				for (int i = 0; i < 5; i++)
+				{
+					play[0].player_board[i] = &boardCell[i + 3];
+					boardCell[i + 3].get_player = &play[0];
+				}
+				for (int i = 0; i < 3; i++)
+				{
+					play[1].player_board[i] = &boardCell[i + 13];
+					boardCell[i + 13].get_player = &play[1];
+				}
+				for (int i = 0; i < 6; i++)
+				{
+					play[2].player_board[i] = &boardCell[i + 28];
+					boardCell[i + 28].get_player = &play[2];
+				}
+				for (int i = 0; i < 1; i++)
+				{
+					play[3].player_board[i] = &boardCell[i + 20];
+					boardCell[i + 20].get_player = &play[3];
+				}
+				play[0].color = 1;
+				play[3].color = YELLOW;
+				play[1].color = RED;
+				play[2].color = GREEN;
+
+
+
+
+
+
+				printBuild(&play[0]);
+				printBuild(&play[1]);
+				printBuild(&play[2]);
+				printBuild(&play[3]);
+				movePlayer(&play[0], 1);
+				movePlayer(&play[1], 2);
+				movePlayer(&play[2], 3);
+				movePlayer(&play[3], 4);
+
+				//y축 21칸 x축 81칸
+				print_board();
+				// 나중에 플레이어 위치, 땅값 구현할것.
+				if (Dice_Move(&play[i], &k, i + 1)) {
+					for (int i = 0; i < 36; i++)
+					{
+						boardCell[i].build = 4;
+					}
+					for (int i = 0; i < 5; i++)
+					{
+						play[0].player_board[i] = &boardCell[i + 3];
+						boardCell[i + 3].get_player = &play[0];
+					}
+					for (int i = 0; i < 3; i++)
+					{
+						play[1].player_board[i] = &boardCell[i + 13];
+						boardCell[i + 13].get_player = &play[1];
+					}
+					for (int i = 0; i < 6; i++)
+					{
+						play[2].player_board[i] = &boardCell[i + 28];
+						boardCell[i + 28].get_player = &play[2];
+					}
+					for (int i = 0; i < 1; i++)
+					{
+						play[3].player_board[i] = &boardCell[i + 20];
+						boardCell[i + 20].get_player = &play[3];
+					}
+					play[0].color = 1;
+					play[3].color = YELLOW;
+					play[1].color = RED;
+					play[2].color = GREEN;
+
+
+
+
+
+
+					printBuild(&play[0]);
+					printBuild(&play[1]);
+					printBuild(&play[2]);
+					printBuild(&play[3]);
+					movePlayer(&play[0], 1);
+					movePlayer(&play[1], 2);
+					movePlayer(&play[2], 3);
+					movePlayer(&play[3], 4);
+
+					//y축 21칸 x축 81칸
+					print_board();
+					// 나중에 플레이어 위치, 땅값 구현할것.
+				}
+			}
+		}
+		for (int i = 0; i < 36; i++)
+		{
+			boardCell[i].build = 4;
+		}
+		for (int i = 0; i < 5; i++)
+		{
+			play[0].player_board[i] = &boardCell[i + 3];
+			boardCell[i + 3].get_player = &play[0];
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			play[1].player_board[i] = &boardCell[i + 13];
+			boardCell[i + 13].get_player = &play[1];
+		}
+		for (int i = 0; i < 6; i++)
+		{
+			play[2].player_board[i] = &boardCell[i + 28];
+			boardCell[i + 28].get_player = &play[2];
+		}
+		for (int i = 0; i < 1; i++)
+		{
+			play[3].player_board[i] = &boardCell[i + 20];
+			boardCell[i + 20].get_player = &play[3];
+		}
+		play[0].color = 1;
+		play[3].color = YELLOW;
+		play[1].color = RED;
+		play[2].color = GREEN;
+
+
+
+
+
+
+		printBuild(&play[0]);
+		printBuild(&play[1]);
+		printBuild(&play[2]);
+		printBuild(&play[3]);
+		movePlayer(&play[0], 1);
+		movePlayer(&play[1], 2);
+		movePlayer(&play[2], 3);
+		movePlayer(&play[3], 4);
+
+		//y축 21칸 x축 81칸
+		print_board();
+		// 나중에 플레이어 위치, 땅값 구현할것.
 	}
-	for (int i = 0; i < 5; i++)
-	{
-		play[0].player_board[i] = &boardCell[i + 3];
-		boardCell[i + 3].get_player = &play[0];
-	}
-	for (int i = 0; i < 3; i++)
-	{
-		play[1].player_board[i] = &boardCell[i + 13];
-		boardCell[i + 13].get_player = &play[1];
-	}
-	for (int i = 0; i < 6; i++)
-	{
-		play[2].player_board[i] = &boardCell[i + 28];
-		boardCell[i + 28].get_player = &play[2];
-	}
-	for (int i = 0; i < 1; i++)
-	{
-		play[3].player_board[i] = &boardCell[i + 20];
-		boardCell[i + 20].get_player = &play[3];
-	}
-	play[0].color = 1;
-	play[3].color = YELLOW;
-	play[1].color = RED;
-	play[2].color = GREEN;
 
 
-
-
-
-
-	printBuild(&play[0]);
-	printBuild(&play[1]);
-	printBuild(&play[2]);
-	printBuild(&play[3]);
-
-	movePlayer(&play[0], 1);
-	movePlayer(&play[1], 2);
-	movePlayer(&play[2], 3);
-	movePlayer(&play[3], 4);
-
-	//y축 21칸 x축 81칸
-	print_board();
-	printf("변경");
-	int num;
-	scanf("%d", &num);
-	if (num == 1)
-	{
-		play[0].location = 6;
-	}
-	movePlayer(&play[0], 1);
-	movePlayer(&play[1], 2);
-	movePlayer(&play[2], 3);
-	movePlayer(&play[3], 4);
-	system("cls");
-	print_board();
-	// 나중에 플레이어 위치, 땅값 구현할것.
 }
 
 void print_board(void) { // 보드판 출력10000
@@ -420,6 +561,7 @@ void print_board(void) { // 보드판 출력10000
 	//"' '3* * * *" >> 1칸
 
 }
+
 void movePlayer(struct player* playerLocation, int playerNum) { // 플레이어의 위치에 따라 '*'기호를 문자열에 저장시켜줌
 	for (int i = 0; i < 10; i++)
 	{
@@ -770,4 +912,64 @@ void printBuild(struct player* playerBuild) {
 			}
 		}
 	}
+}
+
+int Dice() {
+	srand(time(NULL));
+
+	int k = rand() % 6 + 1;
+
+	return k;
+}
+
+int Dice_Move(struct player* _player, int* i, int k) {
+	Sleep(1500);
+	int d1 = Dice();
+	Sleep(1500);
+	int d2 = Dice();
+	//Sleep(1500);
+	if (_player->location == 10) {
+		_player->count++;
+		printf("무인도 %d번째 주사위\n", _player->count);
+		if (_player->count < 3) {
+			printf("첫번째 주사위: %d ", d1);
+			printf("두번째 주사위: %d\n", d2);
+			if (d1 == d2) {
+				_player->location += d1 + d2;
+				_player->count = 0;
+				printf("현재 위치 %d\n", _player->location);
+			}
+			return 0;
+		}
+		else if (_player->count >= 3) {
+			_player->count = 0;
+		}
+	}
+	printf("첫번째 주사위: %d ", d1);
+	printf("두번째 주사위: %d\n", d2);
+	if (d1 == d2) {
+		*i += 1;
+		//printf("더블 %d %d %d %d\n",*i, d1 , d2, *player_locate);
+		if (*i >= 3) {
+
+			_player->location = 10;
+			printf("무인도행 %d\n", _player->location);
+
+			return 0;
+		}
+	}
+	_player->location += d1 + d2;
+	if (_player->location > 36) {
+		_player->location %= 36;
+	}
+	printf("%d플레이어 현재 위치 %d\n", k, _player->location);
+	if (d1 == d2) {
+		return 1;
+	}
+	return 0;
+}
+
+void Island(int* count) {
+	*count += 1;
+
 }
