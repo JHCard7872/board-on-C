@@ -122,10 +122,10 @@ void printBuild(struct player* playerBoard);
 
 int main(void) {
 
-	play[0].location = 34;
-	play[1].location = 34;
-	play[2].location = 34;
-	play[3].location = 34;
+	play[0].location = 4;
+	play[1].location = 4;
+	play[2].location = 4;
+	play[3].location = 4;
 	play[0].haveBoard = 5;
 	play[1].haveBoard = 3;
 	play[2].haveBoard = 6;
@@ -331,10 +331,10 @@ void print_board(void) { // 보드판 출력10000
 				else if (j == 2 && boardCell[(73 - i) / 4].get_player != NULL) {  printf("%c", boardpan[i][j]); printcolor(WHITE); }
 				else if ((j == 10 && boardCell[(73 - i) / 4].get_player != NULL)) { printcolor(boardCell[(73 - i) / 4].get_player->color); printf("%c", boardpan[i][j]); }
 				else if (j == 11 && boardCell[(73 - i) / 4].get_player != NULL) { printf("%c", boardpan[i][j]); printcolor(WHITE); }
-				else if ((j == 100 && boardCell[26+ (i / 4)].get_player != NULL)) { printcolor(boardCell[(26 + (i / 4)) ].get_player->color); printf("%c", boardpan[i][j]); }
-				else if (j == 101 && boardCell[26 + (i / 4)].get_player != NULL) { printf("%c", boardpan[i][j]); printcolor(WHITE); }
-				else if ((j == 109 && boardCell[26 + (i / 4)].get_player != NULL)) { printcolor(boardCell[(26 + (i / 4)) ].get_player->color); printf("%c", boardpan[i][j]); }
-				else if (j == 110 && boardCell[26 + (i / 4)].get_player != NULL) { printf("%c", boardpan[i][j]); printcolor(WHITE); }
+				else if ((j == 100 && boardCell[27+ (i / 4)].get_player != NULL && (i >= 5 && i <= 33))) { printcolor(boardCell[(27 + (i / 4)) ].get_player->color); printf("%c", boardpan[i][j]); }
+				else if (j == 101 && boardCell[27 + (i / 4)].get_player != NULL && (i >= 5 && i <= 33)) { printf("%c", boardpan[i][j]); printcolor(WHITE); }
+				else if ((j == 109 && boardCell[27 + (i / 4)].get_player != NULL && (i >= 5 && i <= 33))) { printcolor(boardCell[(27 + (i / 4)) ].get_player->color); printf("%c", boardpan[i][j]); }
+				else if (j == 110 && boardCell[27 + (i / 4)].get_player != NULL && (i >= 5 && i <= 33)) { printf("%c", boardpan[i][j]); printcolor(WHITE); }
 				else if (i == 17 && j == 22) { printcolor(RED); printf("%c", boardpan[i][j]); } // Red 출력해주는 부분(빨간색으로)
 				else if (i == 17 && j == 27) { printcolor(WHITE); printf("%c", boardpan[i][j]); }
 				else if (i == 17 && j == 36 && play[1].location > 9) { printf("%d", play[1].location); } // 위치 출력
