@@ -142,28 +142,29 @@ int main(void) {
 	for (int i = 0; i < 5; i++)
 	{
 		play[0].player_board[i] = &boardCell[i+3];
+		boardCell[i + 3].get_player = &play[0];
 	}
 	for (int i = 0; i < 3; i++)
 	{
 		play[1].player_board[i] = &boardCell[i+13];
+		boardCell[i + 13].get_player = &play[1];
 	}
 	for (int i = 0; i < 6; i++)
 	{
 		play[2].player_board[i] = &boardCell[i+28];
+		boardCell[i + 28].get_player = &play[2];
 	}
 	for (int i = 0; i < 1; i++)
 	{
 		play[3].player_board[i] = &boardCell[i+20];
+		boardCell[i + 20].get_player = &play[3];
 	}
 	play[0].color = 1;
 	play[3].color = YELLOW;
 	play[1].color = RED;
 	play[2].color = GREEN;
 
-	boardCell[3].get_player = &play[0];
-	boardCell[20].get_player = &play[3];
-	boardCell[13].get_player = &play[1];
-	boardCell[30].get_player = &play[2];
+	
 	
 
 
