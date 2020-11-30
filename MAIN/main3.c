@@ -806,11 +806,10 @@ void printBuild(struct player* playerBuild) {
 int Dice_Move(struct player* _player, int* i, int k) {
 	char buf[2] = "★";
 	int d1 = rand() % 6 + 1;
-
-	for (int i = 0; i < 2; i++)
-	{
-		boardpan[3][122 + i] = ' ';
-	boardpan[3][120 + i] = ' ';
+	int u = 18;
+	boardpan[3][122 ] = ' ';
+	boardpan[3][123] = ' ';
+	boardpan[3][120 ] = ' ';
 	boardpan[3][121] = ' ';
 	boardpan[3][125] = ' ';
 	boardpan[3][126] = ' ';
@@ -834,6 +833,33 @@ int Dice_Move(struct player* _player, int* i, int k) {
 	boardpan[3][120] = ' ';
 	boardpan[3][126] = ' ';
 	boardpan[3][127] = ' ';
+	// 첫번쨰 주사위
+	boardpan[3][122+u] = ' ';
+	boardpan[3][123 + u] = ' ';
+	boardpan[3][120 + u] = ' ';
+	boardpan[3][121 + u] = ' ';
+	boardpan[3][125 + u] = ' ';
+	boardpan[3][126 + u] = ' ';
+	boardpan[1][119 + u] = ' ';
+	boardpan[1][120 + u] = ' ';
+	boardpan[5][126 + u] = ' ';
+	boardpan[5][127 + u] = ' ';
+	boardpan[2][131 + u] = ' ';
+	boardpan[2][132 + u] = ' ';
+	boardpan[2][136 + u] = ' ';
+	boardpan[2][137 + u] = ' ';
+	boardpan[4][165 + u] = ' ';
+	boardpan[4][166 + u] = ' ';
+	boardpan[4][170 + u] = ' ';
+	boardpan[4][171 + u] = ' ';
+	boardpan[1][126 + u] = ' ';
+	boardpan[1][127 + u] = ' ';
+	boardpan[5][119 + u] = ' ';
+	boardpan[5][120 + u] = ' ';
+	boardpan[3][119 + u] = ' ';
+	boardpan[3][120 + u] = ' ';
+	boardpan[3][126 + u] = ' ';
+	boardpan[3][127 + u] = ' ';
 	if (d1 == 1)
 	{
 		boardpan[3][122] = buf[0];
@@ -894,8 +920,67 @@ int Dice_Move(struct player* _player, int* i, int k) {
 		boardpan[5][119] = buf[0];
 		boardpan[5][120] = buf[1];
 	}
-}
 	int d2 = rand() % 6 + 1;
+	if (d2 == 1)
+	{
+		boardpan[3][122+u] = buf[0];
+		boardpan[3][123+u] = buf[1];
+	}
+	else if (d2 == 2)
+	{
+		boardpan[3][120+u] = buf[0];
+		boardpan[3][121 + u] = buf[1];
+		boardpan[3][125 + u] = buf[0];
+		boardpan[3][126 + u] = buf[1];
+	}
+	else if (d2 == 3)
+	{
+		boardpan[3][122 + u] = buf[0];
+		boardpan[3][123 + u] = buf[1];
+		boardpan[1][119 + u] = buf[0];
+		boardpan[1][120 + u] = buf[1];
+		boardpan[5][126 + u] = buf[0];
+		boardpan[5][127 + u] = buf[1];
+	}
+	else if (d2 == 4)
+	{
+		boardpan[2][131 + u] = buf[0];
+		boardpan[2][132 + u] = buf[1];
+		boardpan[2][136 + u] = buf[0];
+		boardpan[2][137 + u] = buf[1];
+		boardpan[4][165 + u] = buf[0];
+		boardpan[4][166 + u] = buf[1];
+		boardpan[4][170 + u] = buf[0];
+		boardpan[4][171 + u] = buf[1];
+	}
+	else if (d2 == 5)
+	{
+		boardpan[3][122 + u] = buf[0];
+		boardpan[3][123 + u] = buf[1];
+		boardpan[1][119 + u] = buf[0];
+		boardpan[1][120 + u] = buf[1];
+		boardpan[1][126 + u] = buf[0];
+		boardpan[1][127 + u] = buf[1];
+		boardpan[5][126 + u] = buf[0];
+		boardpan[5][127 + u] = buf[1];
+		boardpan[5][119 + u] = buf[0];
+		boardpan[5][120 + u] = buf[1];
+	}
+	else
+	{
+		boardpan[1][119 + u] = buf[0];
+		boardpan[1][120 + u] = buf[1];
+		boardpan[1][126 + u] = buf[0];
+		boardpan[1][127 + u] = buf[1];
+		boardpan[3][119 + u] = buf[0];
+		boardpan[3][120 + u] = buf[1];
+		boardpan[3][126 + u] = buf[0];
+		boardpan[3][127 + u] = buf[1];
+		boardpan[5][126 + u] = buf[0];
+		boardpan[5][127 + u] = buf[1];
+		boardpan[5][119 + u] = buf[0];
+		boardpan[5][120 + u] = buf[1];
+	}
 	//Sleep(1500);
 	if (_player->location == 9) {
 		_player->count++;
