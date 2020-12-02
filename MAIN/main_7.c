@@ -934,13 +934,13 @@ int Dice_Move(struct player* _player, int* i, int k) {
 	int d1 = Dice();
 	Sleep(1100);
 	int d2 = Dice();
-	if (_player->location == 27 && _player->money > 20000) {
+	if (_player->location == 27 && _player->money > 200000) {
 		int target;
 		printf("원하는 위치를 선택하시오(숫자)");
 		scanf("%d", &target);
 		_player->location = target;
 		if (target > 27 && target < 36) {
-			_player->money -= 20000;
+			_player->money -= 200000;
 		}
 		system("cls");
 		return 0;
@@ -963,6 +963,7 @@ int Dice_Move(struct player* _player, int* i, int k) {
 		}
 		else if (_player->count >= 3) {
 			_player->count = 0;
+			_player->money += 200000;
 		}
 	}
 	printf("첫번째 주사위: %d ", d1);
@@ -1042,6 +1043,7 @@ void GoldenKey(struct player* player_) {
 	case 9:
 		printf("출발지로 이동\n");
 		player_->location = 0;
+		player_->money += 200000;
 		break;
 	}
 }
