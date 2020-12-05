@@ -1025,68 +1025,68 @@ void sell(struct board* _boardCell, struct player* Player) {
 	switch ((_boardCell + number)->build) {
 	case 1: Player->money += (_boardCell + number)->value;
 		break;
-	case 2: if (_boardCell + number)->num > 0 && _boardCell + number)->num < 9) {
+	case 2: if ((_boardCell + number)->num > 0 && (_boardCell + number)->num < 9) {
 	Player->money += 50000;
 	}
-	if (_boardCell + number)->num > 9 && _boardCell + number)->num < 18) {
+	if( (_boardCell + number)->num > 9 && (_boardCell + number)->num < 18) {
 	Player->money += 100000;
 	}
-	if (_boardCell + number)->num > 18 && _boardCell + number)->num < 27) {
+	if ((_boardCell + number)->num > 18 && (_boardCell + number)->num < 27) {
 	Player->money += 150000;
 	}
-	if (_boardCell + number)->num > 27 && _boardCell + number)->num < 36) {
+	if ((_boardCell + number)->num > 27 && (_boardCell + number)->num < 36) {
 	Player->money += 200000;
 	}
 	break;
-	case 3: if (_boardCell + number)->num > 0 && _boardCell + number)->num < 9) {
+	case 3: if ((_boardCell + number)->num > 0 && _boardCell + number)->num < 9) {
 	Player->money += 50000;
 	}
-	if (_boardCell + number)->num > 9 && _boardCell + number)->num < 18) {
+	if ((_boardCell + number)->num > 9 && (_boardCell + number)->num < 18) {
 	Player->money += 100000;
 	}
-	if (_boardCell + number)->num > 18 && _boardCell + number)->num < 27) {
+	if ((_boardCell + number)->num > 18 && (_boardCell + number)->num < 27) {
 	Player->money += 150000;
 	}
-	if (_boardCell + number)->num > 27 && _boardCell + number)->num < 36) {
+	if ((_boardCell + number)->num > 27 && (_boardCell + number)->num < 36) {
 	Player->money += 200000;
 	}
 	break;
-	case 4: if (_boardCell + number)->num > 0 && _boardCell + number)->num < 9) {
+	case 4: if ((_boardCell + number)->num > 0 && (_boardCell + number)->num < 9) {
 	Player->money += 150000;
 	}
-	if (_boardCell + number)->num > 9 && _boardCell + number)->num < 18) {
+	if ((_boardCell + number)->num > 9 && (_boardCell + number)->num < 18) {
 	Player->money += 300000;
 	}
-	if (_boardCell + number)->num > 18 && _boardCell + number)->num < 27) {
+	if ((_boardCell + number)->num > 18 && (_boardCell + number)->num < 27) {
 	Player->money += 450000;
 	}
-	if (_boardCell + number)->num > 27 && _boardCell + number)->num < 36) {
+	if ((_boardCell + number)->num > 27 && (_boardCell + number)->num < 36) {
 	Player->money += 600000;
 	}
 	break;
-	case 5: if (_boardCell + number)->num > 0 && _boardCell + number)->num < 9) {
+	case 5: if ((_boardCell + number)->num > 0 && (_boardCell + number)->num < 9) {
 	Player->money += 250000;
 	}
-	if (_boardCell + number)->num > 9 && _boardCell + number)->num < 18) {
+	if ((_boardCell + number)->num > 9 && (_boardCell + number)->num < 18) {
 	Player->money += 500000;
 	}
-	if (_boardCell + number)->num > 18 && _boardCell + number)->num < 27) {
+	if ((_boardCell + number)->num > 18 && (_boardCell + number)->num < 27) {
 	Player->money += 750000;
 	}
-	if (_boardCell + number)->num > 27 && _boardCell + number)->num < 36) {
+	if ((_boardCell + number)->num > 27 && (_boardCell + number)->num < 36) {
 	Player->money += 1000000;
 	}
 	break;
 	}
 	(_boardCell + number)->get_player->color = 0;
-	Player->haveboard--;
+	Player->haveBoard--;
 }
 
 void buy(struct board* _boardCell, struct player* Player) {//Player는 현재 차례인 플레이어.
-	if ((_boardCell + Player->location)->get_player->color == 0 && (_boardCell + Player->location) != 0 && (_boardCell + Player->location) != 2 && (_boardCell + Player->location) != 6
-		&& (_boardCell + Player->location) != 9 && (_boardCell + Player->location) != 11 && (_boardCell + Player->location) != 15 && (_boardCell + Player->location) != 18
-		&& (_boardCell + Player->location) != 20 && (_boardCell + Player->location) != 25 && (_boardCell + Player->location) != 27 && (_boardCell + Player->location) != 31
-		&& (_boardCell + Player->location) != 34) {//_boardCell은 boardCell[0]을 의미함. 거기에 Player->location을 더해줘서 [1],[2],[3],...[35]으로 취급.
+	if ((_boardCell + Player->location)->get_player->color == 0 && (_boardCell + Player->location)->num != 0 && (_boardCell + Player->location)->num != 2 && (_boardCell + Player->location)->num != 6
+		&& (_boardCell + Player->location)->num != 9 && (_boardCell + Player->location)->num != 11 && (_boardCell + Player->location)->num != 15 && (_boardCell + Player->location)->num != 18
+		&& (_boardCell + Player->location)->num != 20 && (_boardCell + Player->location)->num != 25 && (_boardCell + Player->location)->num != 27 && (_boardCell + Player->location)->num != 31
+		&& (_boardCell + Player->location)->num != 34)) {//_boardCell은 boardCell[0]을 의미함. 거기에 Player->location을 더해줘서 [1],[2],[3],...[35]으로 취급.
 		printf("이 땅을 사시겠습니까? (0번) 예 (1번) 아니요");
 		int select;
 		scanf_s("%d", &select);
@@ -1100,9 +1100,9 @@ void buy(struct board* _boardCell, struct player* Player) {//Player는 현재 차례�
 				else {
 					Player->money -= (_boardCell + Player->location)->value;
 					(_boardCell + Player->location)->get_player->color = Player->color;
-					Player->player_board[Player->haveboard] = &boardCell[Player->location];
+					Player->player_board[Player->haveBoard] = &boardCell[Player->location];
 					boardCell[Player->location].get_player = Player;
-					Player->haveboard++;
+					Player->haveBoard++;
 					(_boardCell + Player->location)->build++;
 
 
