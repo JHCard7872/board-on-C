@@ -135,6 +135,9 @@ void clear_string(void); // 문자열 ' '으로 초기화해주는거
 void clear(int i, int j, int k);
 void printPlayer(int k);
 void printString(int i, int j, int k, char* name);
+void sell(struct board* _boardCell, struct player* Player)//_boardCell은 보드 구조체의 주소, Player는 현재 차례인 플레이어 구조체의 주소.
+void buy(struct board* _boardCell, struct player* Player)
+void build(struct board* _boardCell, struct player* Player)
 
 int main(void) {
 	int k;
@@ -1012,5 +1015,360 @@ void printString(int i, int j, int k, char* buf) {
 	for (int a = 0; a < k; a++)
 	{
 		boardpan[i][j + a] = buf[a];
+	}
+}
+
+void sell(struct board* _boardCell, struct player* Player) {
+	printf("어떤 땅을 파시겠습니까? 땅의 번호를 입력하세요 : ");
+	int number;
+	scanf_s("%d", &number);
+	switch ((_boardCell + number)->build) {
+	case 1: Player->money += (_boardCell + number)->value;
+		break;
+	case 2: if (_boardCell + number)->num > 0 && _boardCell + number)->num < 9) {
+	Player->money += 50000;
+	}
+	if (_boardCell + number)->num > 9 && _boardCell + number)->num < 18) {
+	Player->money += 100000;
+	}
+	if (_boardCell + number)->num > 18 && _boardCell + number)->num < 27) {
+	Player->money += 150000;
+	}
+	if (_boardCell + number)->num > 27 && _boardCell + number)->num < 36) {
+	Player->money += 200000;
+	}
+	break;
+	case 3: if (_boardCell + number)->num > 0 && _boardCell + number)->num < 9) {
+	Player->money += 50000;
+	}
+	if (_boardCell + number)->num > 9 && _boardCell + number)->num < 18) {
+	Player->money += 100000;
+	}
+	if (_boardCell + number)->num > 18 && _boardCell + number)->num < 27) {
+	Player->money += 150000;
+	}
+	if (_boardCell + number)->num > 27 && _boardCell + number)->num < 36) {
+	Player->money += 200000;
+	}
+	break;
+	case 4: if (_boardCell + number)->num > 0 && _boardCell + number)->num < 9) {
+	Player->money += 150000;
+	}
+	if (_boardCell + number)->num > 9 && _boardCell + number)->num < 18) {
+	Player->money += 300000;
+	}
+	if (_boardCell + number)->num > 18 && _boardCell + number)->num < 27) {
+	Player->money += 450000;
+	}
+	if (_boardCell + number)->num > 27 && _boardCell + number)->num < 36) {
+	Player->money += 600000;
+	}
+	break;
+	case 5: if (_boardCell + number)->num > 0 && _boardCell + number)->num < 9) {
+	Player->money += 250000;
+	}
+	if (_boardCell + number)->num > 9 && _boardCell + number)->num < 18) {
+	Player->money += 500000;
+	}
+	if (_boardCell + number)->num > 18 && _boardCell + number)->num < 27) {
+	Player->money += 750000;
+	}
+	if (_boardCell + number)->num > 27 && _boardCell + number)->num < 36) {
+	Player->money += 1000000;
+	}
+	break;
+	}
+	(_boardCell + number)->get_player->color = 0;
+	Player->haveboard--;
+}
+
+void buy(struct board* _boardCell, struct player* Player) {//Player는 현재 차례인 플레이어.
+	if ((_boardCell + Player->location)->get_player->color == 0 && (_boardCell + Player->location) != 0 && (_boardCell + Player->location) != 2 && (_boardCell + Player->location) != 6
+		&& (_boardCell + Player->location) != 9 && (_boardCell + Player->location) != 11 && (_boardCell + Player->location) != 15 && (_boardCell + Player->location) != 18
+		&& (_boardCell + Player->location) != 20 && (_boardCell + Player->location) != 25 && (_boardCell + Player->location) != 27 && (_boardCell + Player->location) != 31
+		&& (_boardCell + Player->location) != 34) {//_boardCell은 boardCell[0]을 의미함. 거기에 Player->location을 더해줘서 [1],[2],[3],...[35]으로 취급.
+		printf("이 땅을 사시겠습니까? (0번) 예 (1번) 아니요");
+		int select;
+		scanf_s("%d", &select);
+		if (select == 0) {
+			printf("이 땅의 가격은 %d원입니다. 정말로 사시겠습니까? (0번) 예 (1번) 아니요", (_boardCell + Player->location)->value);
+			scanf_s("%d", &select);
+			if (select == 0) {
+				if (Player->money < (_boardCell + Player->location)->value) {
+					printf("돈이 모자랍니다.");
+				}
+				else {
+					Player->money -= (_boardCell + Player->location)->value;
+					(_boardCell + Player->location)->get_player->color = Player->color;
+					Player->player_board[Player->haveboard] = &boardCell[Player->location];
+					boardCell[Player->location].get_player = Player;
+					Player->haveboard++;
+					(_boardCell + Player->location)->build++;
+
+
+				}
+			}
+		}
+	}
+}
+
+void build(struct board* _boardCell, struct player* Player) {
+	int select = 0;
+	if ((_boardCell + Player->location)->get_player->color == Player->color && (_boardCell + Player->location)->num != 35) {//땅의 소유주인 플레이어와 플레이하는 플레이어의 색깔이 같다면.
+		if ((_boardCell + Player->location)->build == 0) {//아무것도 안 지어져 있을 때.
+			printf("건설하시겠습니까? (0번) 스킵 (1번) 예");
+			scanf_s("%d", &select);
+		}
+	}
+	if ((_boardCell + Player->location)->build == 4) {//다 지어졌을 때.
+		printf("더는 건설할 수 없습니다.");
+	}
+	if (select == 1 && (_boardCell + Player->location)->build != 5) {
+		switch ((_boardCell + Player->location)->build) {
+		case 1:if ((_boardCell + Player->location)->num > 0 && (_boardCell + Player->location)->num < 9 &&
+			(_boardCell + Player->location)->num != 2 && (_boardCell + Player->location)->num != -6) {//2,6,9번 땅은 황금열쇠라서 제외.
+			printf("별장의 가격은 5만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+			scanf_s("%d", &select);
+			if (select == 0) {
+				if (Player->money < 50000) {
+					printf("돈이 모자랍니다.");
+				}
+				else {
+					(_boardCell + Player->location)->build += 1;
+					Player->money -= 50000;
+					(_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_villa1;
+				}
+			}
+		}
+			  if ((_boardCell + Player->location)->num > 9 && (_boardCell + Player->location)->num < 18 &&
+				  (_boardCell + Player->location)->num != 11 && (_boardCell + Player->location)->num != 15) {//11,15번 땅은 황금열쇠라서 제외.
+				  printf("별장의 가격은 10만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 100000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  (_boardCell + Player->location)->build += 1;
+						  Player->money -= 100000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_villa1;
+					  }
+				  }
+			  }
+			  if ((_boardCell + Player->location)->num > 18 && (_boardCell + Player->location)->num < 27 &&
+				  (_boardCell + Player->location)->num != 20 && (_boardCell + Player->location)->num != 25) {//20,25번 땅은 황금열쇠라서 제외.
+				  printf("별장의 가격은 15만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 150000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  _boardCell->build += 1;
+						  Player->money -= 150000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_villa1;
+					  }
+				  }
+			  }
+			  if ((_boardCell + Player->location)->num > 27 && (_boardCell + Player->location)->num < 36 &&
+				  (_boardCell + Player->location)->num != 31 && (_boardCell + Player->location)->num != 34) {//31,14번 땅은  각각 황금열쇠, 기부라서 제외.
+				  printf("별장의 가격은 20만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 200000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  (_boardCell + Player->location)->build += 1;
+						  Player->money -= 200000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_villa1;
+					  }
+				  }
+			  }
+			  break;
+		case 2:if ((_boardCell + Player->location)->num > 0 && (_boardCell + Player->location)->num < 9 &&
+			(_boardCell + Player->location)->num != 2 && (_boardCell + Player->location)->num != -6) {//2,6,9번 땅은 황금열쇠라서 제외.
+			printf("별장의 가격은 5만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+			scanf_s("%d", &select);
+			if (select == 0) {
+				if (Player->money < 50000) {
+					printf("돈이 모자랍니다.");
+				}
+				else {
+					(_boardCell + Player->location)->build += 1;
+					Player->money -= 50000;
+					(_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_villa2;
+				}
+			}
+		}
+			  if ((_boardCell + Player->location)->num > 9 && (_boardCell + Player->location)->num < 18 &&
+				  (_boardCell + Player->location)->num != 11 && (_boardCell + Player->location)->num != 15) {//11,15번 땅은 황금열쇠라서 제외.
+				  printf("별장의 가격은 10만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 100000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  (_boardCell + Player->location)->build += 1;
+						  Player->money -= 100000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_villa2;
+					  }
+				  }
+			  }
+			  if ((_boardCell + Player->location)->num > 18 && (_boardCell + Player->location)->num < 27 &&
+				  (_boardCell + Player->location)->num != 20 && (_boardCell + Player->location)->num != 25) {//20,25번 땅은 황금열쇠라서 제외.
+				  printf("별장의 가격은 15만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 150000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  _boardCell->build += 1;
+						  Player->money -= 150000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_villa2;
+					  }
+				  }
+			  }
+			  if ((_boardCell + Player->location)->num > 27 && (_boardCell + Player->location)->num < 36 &&
+				  (_boardCell + Player->location)->num != 31 && (_boardCell + Player->location)->num != 34) {//31,14번 땅은  각각 황금열쇠, 기부라서 제외.
+				  printf("별장의 가격은 20만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 200000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  (_boardCell + Player->location)->build += 1;
+						  Player->money -= 200000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_villa2;
+					  }
+				  }
+			  }
+			  break;
+		case 3:if ((_boardCell + Player->location)->num > 0 && (_boardCell + Player->location)->num < 9 &&
+			(_boardCell + Player->location)->num != 2 && (_boardCell + Player->location)->num != 6) {//2,6,9번 땅은 황금열쇠라서 제외.
+			printf("빌딩의 가격은 15만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+			scanf_s("%d", &select);
+			if (select == 0) {
+				if (Player->money < 150000) {
+					printf("돈이 모자랍니다.");
+				}
+				else {
+					(_boardCell + Player->location)->build += 1;
+					Player->money -= 150000;
+					(_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_building;
+				}
+			}
+		}
+			  if ((_boardCell + Player->location)->num > 9 && (_boardCell + Player->location)->num < 18 &&
+				  (_boardCell + Player->location)->num != 11 && (_boardCell + Player->location)->num != 15) {//11,15번 땅은 황금열쇠라서 제외.
+				  printf("빌딩의 가격은 30만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 300000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  (_boardCell + Player->location)->build += 1;
+						  Player->money -= 300000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_building;
+					  }
+				  }
+			  }
+			  if ((_boardCell + Player->location)->num > 18 && (_boardCell + Player->location)->num < 27 &&
+				  (_boardCell + Player->location)->num != 20 && (_boardCell + Player->location)->num != 25) {//20,25번 땅은 황금열쇠라서 제외.
+				  printf("빌딩의 가격은 45만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 450000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  (_boardCell + Player->location)->build += 1;
+						  Player->money -= 450000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_building;
+					  }
+				  }
+			  }
+			  if ((_boardCell + Player->location)->num > 27 && (_boardCell + Player->location)->num < 36 &&
+				  (_boardCell + Player->location)->num != 31 && (_boardCell + Player->location)->num != 34) {//31,14번 땅은  각각 황금열쇠, 기부라서 제외.
+				  printf("빌딩의 가격은 60만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 600000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  (_boardCell + Player->location)->build += 1;
+						  Player->money -= 600000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_building;
+					  }
+				  }
+			  }
+			  break;
+		case 4:if ((_boardCell + Player->location)->num > 0 && _boardCell->num < 9 &&
+			(_boardCell + Player->location)->num != 2 && (_boardCell + Player->location)->num != 6) {//2,6,9번 땅은 황금열쇠라서 제외.
+			printf("호텔의 가격은 25만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+			scanf_s("%d", &select);
+			if (select == 0) {
+				if (Player->money < 250000) {
+					printf("돈이 모자랍니다.");
+				}
+				else {
+					(_boardCell + Player->location)->build += 1;
+					Player->money -= 250000;
+					(_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_hotel;
+				}
+			}
+		}
+			  if ((_boardCell + Player->location)->num > 9 && (_boardCell + Player->location)->num < 18 &&
+				  (_boardCell + Player->location)->num != 11 && (_boardCell + Player->location)->num != 15) {//11,15번 땅은 황금열쇠라서 제외.
+				  printf("호텔의 가격은 50만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 500000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  (_boardCell + Player->location)->build += 1;
+						  Player->money -= 500000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_hotel; .
+					  }
+				  }
+			  }
+			  if ((_boardCell + Player->location)->num > 18 && (_boardCell + Player->location)->num < 27 &&
+				  (_boardCell + Player->location)->num != 20 && (_boardCell + Player->location)->num != 25) {//20,25번 땅은 황금열쇠라서 제외.
+				  printf("호텔의 가격은 75만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 750000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  (_boardCell + Player->location)->build += 1;
+						  Player->money -= 750000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_hotel;
+					  }
+				  }
+			  }
+			  if ((_boardCell + Player->location)->num > 27 && (_boardCell + Player->location)->num < 35 &&
+				  (_boardCell + Player->location)->num != 31 && (_boardCell + Player->location)->num != 34) {//31,14번 땅은  각각 황금열쇠, 기부라서 제외.
+				  printf("호텔의 가격은 100만원입니다. 정말로 건설하시겠습니까? (0번) 예 (1번) 아니요");
+				  scanf_s("%d", &select);
+				  if (select == 0) {
+					  if (Player->money < 1000000) {
+						  printf("돈이 모자랍니다.");
+					  }
+					  else {
+						  (_boardCell + Player->location)->build += 1;
+						  Player->money -= 1000000;
+						  (_boardCell + Player->location)->pass_value = (_boardCell + Player->location)->pass_hotel;
+					  }
+				  }
+			  }
+			  break;
+		}
 	}
 }
