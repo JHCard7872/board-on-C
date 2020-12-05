@@ -18,6 +18,7 @@ struct board {
 	struct board* get_player;
 };
 
+
 void print_board(void);
 void printcolor(int color);
 
@@ -28,6 +29,46 @@ int main(void) {
 	// 나중에 플레이어 위치, 땅값 구현할것.
 }
 
+char board[5][10][36] = { 0, };
+
+
+char boardpan[50][100];
+void board_update(char*** boards) {
+	int a = 0;
+	for (int i = 9; i > 0; i--) {
+		for (int j = 0; j < 5; j++) {
+			for (int k = 0; k < 10; k++) {
+				boardpan[45 + j][i * 10 + k] = boards[j][k][a];
+			}
+		}
+		a++;
+	}
+	for (int i = 9; i > 0; i--) {
+		for (int j = 0; j < 5; j++) {
+			for (int k = 0; k < 10; k++) {
+				boardpan[i * 5 + j][90 + k] = boards[j][k][a];
+			}
+		}
+		a++;
+	}
+	for (int i = 0; i < 9; i++) {
+		for (int j = 0; j < 5; j++) {
+			for (int k = 0; k < 10; k++) {
+				boardpan[j][i * 10 + k] = boards[j][k][a];
+			}
+		}
+		a++;
+	}
+	for (int i = 0; i < 9; i++) {
+		for (int j = 0; j < 5; j++) {
+			for (int k = 0; k < 10; k++) {
+				boardpan[i * 5 + j][90 + k] = boards[j][k][a];
+			}
+		}
+		a++;
+	}
+}
+/*
 void print_board(void) {
 	char boardpan[31][160] = {
 	"┏    18    ┳    19    ┳    20    ┳    21    ┳    22    ┳    23    ┳    24    ┳    25    ┳    26    ┳    27    ┓",
@@ -93,6 +134,7 @@ void print_board(void) {
 	printf("%s\n", boardpan[30]);
 
 }
+*/
 
 void printcolor(int color) {
 	if (color == WHITE)
