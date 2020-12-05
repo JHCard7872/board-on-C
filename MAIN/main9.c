@@ -135,9 +135,9 @@ void clear_string(void); // 문자열 ' '으로 초기화해주는거
 void clear(int i, int j, int k);
 void printPlayer(int k);
 void printString(int i, int j, int k, char* name);
-void sell(struct board* _boardCell, struct player* Player)//_boardCell은 보드 구조체의 주소, Player는 현재 차례인 플레이어 구조체의 주소.
-void buy(struct board* _boardCell, struct player* Player)
-void build(struct board* _boardCell, struct player* Player)
+void sell(struct board* _boardCell, struct player* Player);//_boardCell은 보드 구조체의 주소, Player는 현재 차례인 플레이어 구조체의 주소.
+void buy(struct board* _boardCell, struct player* Player);
+void build(struct board* _boardCell, struct player* Player);
 
 int main(void) {
 	int k;
