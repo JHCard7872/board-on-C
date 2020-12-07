@@ -917,7 +917,7 @@ void printBuild(struct player* playerBuild) {
 			}
 		}
 	}
-	
+
 }
 
 int Dice_Move(struct player* _player, int* i, int k) { // i >> 무인도를 위한 카운트? k >> 플레이어
@@ -1037,6 +1037,14 @@ int Dice_Move(struct player* _player, int* i, int k) { // i >> 무인도를 위한 카�
 		printString(10, 147, 2, buf_location); // 위치 출력
 		int target;
 		system("cls");
+		printBuild(&play[0]); // play0의 건물 가운데에 출력
+		printBuild(&play[1]);
+		printBuild(&play[2]);
+		printBuild(&play[3]);
+		movePlayer(&play[0], 1); // 플레이어 이동하는거 출력해줌(별모양으로)
+		movePlayer(&play[1], 2);
+		movePlayer(&play[2], 3);
+		movePlayer(&play[3], 4);
 		print_board();
 		while (1) {
 			printf("원하는 위치를 선택하시오.(이용료 200k) ");
@@ -1284,7 +1292,7 @@ void sell(struct board* _boardCell, struct player* Player) {
 							Player->player_board[i]->build = 0;
 							for (int j = i; j < 20; j++)
 							{
-								if (Player->player_board[j+1] == NULL) break;
+								if (Player->player_board[j + 1] == NULL) break;
 								Player->player_board[j] = Player->player_board[j + 1];
 							}
 							break;
