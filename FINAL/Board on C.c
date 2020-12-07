@@ -258,6 +258,7 @@ int main(void) {
 	srand((unsigned)time(NULL)); // 랜덤
 	int m = 0;
 	print_board();
+
 	while (1)
 	{ // 보드판 출력 반복.
 		k = 0; // k값 이용해서 아마 더블 표현?
@@ -784,12 +785,37 @@ void printBuild(struct player* playerBuild) {
 	char bufVilla[2] = "♠";
 	char bufBuilding[2] = "♣";
 	char bufHotel[2] = "♥";
+	char basebuild[2] = "●";
 	char buf[2] = { 0 };
+
 
 
 	for (int i = 0; i < playerBuild->haveBoard; i++) // 가지고 있는 건물수 만큼 문자열에 저장.
 	{
-		if (playerBuild->player_board[i]->build == 2) // 건물 1개 일때 >> Villa 출력
+		if (playerBuild->player_board[i]->build == 1) // 건물 1개 일때 >> Villa 출력
+		{
+			if (playerBuild->player_board[i]->num >= 0 && playerBuild->player_board[i]->num <= 9)
+			{
+				boardpan[39][1 + 11 * (9 - playerBuild->player_board[i]->num)] = basebuild[0];
+				boardpan[39][2 + 11 * (9 - playerBuild->player_board[i]->num)] = basebuild[1];
+			}
+			else if (playerBuild->player_board[i]->num >= 10 && playerBuild->player_board[i]->num <= 17)
+			{
+				boardpan[35 - ((playerBuild->player_board[i]->num - 10) * 4)][1] = basebuild[0];
+				boardpan[35 - ((playerBuild->player_board[i]->num - 10) * 4)][2] = basebuild[1];
+			}
+			else if (playerBuild->player_board[i]->num >= 18 && playerBuild->player_board[i]->num <= 27)
+			{
+				boardpan[3][1 + (11 * (playerBuild->player_board[i]->num - 18))] = basebuild[0];
+				boardpan[3][2 + (11 * (playerBuild->player_board[i]->num - 18))] = basebuild[1];
+			}
+			else if (playerBuild->player_board[i]->num >= 28 && playerBuild->player_board[i]->num <= 35)
+			{
+				boardpan[35 - ((35 - playerBuild->player_board[i]->num) * 4)][100] = basebuild[0];
+				boardpan[35 - ((35 - playerBuild->player_board[i]->num) * 4)][101] = basebuild[1];
+			}
+		}
+		else if (playerBuild->player_board[i]->build == 2) // 건물 1개 일때 >> Villa 출력
 		{
 			if (playerBuild->player_board[i]->num >= 0 && playerBuild->player_board[i]->num <= 9)
 			{
@@ -891,6 +917,7 @@ void printBuild(struct player* playerBuild) {
 			}
 		}
 	}
+	
 }
 
 int Dice_Move(struct player* _player, int* i, int k) { // i >> 무인도를 위한 카운트? k >> 플레이어
@@ -1252,11 +1279,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 					Player->money += (_boardCell + number)->value;
 					(_boardCell + number)->get_player = NULL;
 					for (int i = 0; i < 20; i++) {
-						if (Player->player_board[i] == NULL) continue;
 						if (Player->player_board[i]->num == (_boardCell + number)->num)
 						{
 							Player->player_board[i]->build = 0;
-							Player->player_board[i] = NULL;
+							for (int j = i; j < 20; j++)
+							{
+								if (Player->player_board[j+1] == NULL) break;
+								Player->player_board[j] = Player->player_board[j + 1];
+							}
+							break;
 						}
 					}
 					Player->haveBoard--;
@@ -1275,11 +1306,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 100000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1296,11 +1331,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 100000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1317,11 +1356,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 150000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1338,11 +1381,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 200000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1361,11 +1408,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 50000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1383,11 +1434,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 100000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1404,11 +1459,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 150000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1425,11 +1484,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 200000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1448,11 +1511,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 150000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1469,11 +1536,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 300000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1490,11 +1561,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 450000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1511,11 +1586,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						Player->money += 600000;
 						(_boardCell + number)->get_player = NULL;
 						for (int i = 0; i < 20; i++) {
-							if (Player->player_board[i] == NULL) continue;
 							if (Player->player_board[i]->num == (_boardCell + number)->num)
 							{
 								Player->player_board[i]->build = 0;
-								Player->player_board[i] = NULL;
+								for (int j = i; j < 20; j++)
+								{
+									if (Player->player_board[j + 1] == NULL) break;
+									Player->player_board[j] = Player->player_board[j + 1];
+								}
+								break;
 							}
 						}
 						Player->haveBoard--;
@@ -1536,11 +1615,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						  Player->money += 500000;
 						  (_boardCell + number)->get_player = NULL;
 						  for (int i = 0; i < 20; i++) {
-							  if (Player->player_board[i] == NULL) continue;
 							  if (Player->player_board[i]->num == (_boardCell + number)->num)
 							  {
 								  Player->player_board[i]->build = 0;
-								  Player->player_board[i] = NULL;
+								  for (int j = i; j < 20; j++)
+								  {
+									  if (Player->player_board[j + 1] == NULL) break;
+									  Player->player_board[j] = Player->player_board[j + 1];
+								  }
+								  break;
 							  }
 						  }
 						  Player->haveBoard--;
@@ -1557,11 +1640,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						  Player->money += 750000;
 						  (_boardCell + number)->get_player = NULL;
 						  for (int i = 0; i < 20; i++) {
-							  if (Player->player_board[i] == NULL) continue;
 							  if (Player->player_board[i]->num == (_boardCell + number)->num)
 							  {
 								  Player->player_board[i]->build = 0;
-								  Player->player_board[i] = NULL;
+								  for (int j = i; j < 20; j++)
+								  {
+									  if (Player->player_board[j + 1] == NULL) break;
+									  Player->player_board[j] = Player->player_board[j + 1];
+								  }
+								  break;
 							  }
 						  }
 						  Player->haveBoard--;
@@ -1578,11 +1665,15 @@ void sell(struct board* _boardCell, struct player* Player) {
 						  Player->money += 1000000;
 						  (_boardCell + number)->get_player = NULL;
 						  for (int i = 0; i < 20; i++) {
-							  if (Player->player_board[i] == NULL) continue;
 							  if (Player->player_board[i]->num == (_boardCell + number)->num)
 							  {
 								  Player->player_board[i]->build = 0;
-								  Player->player_board[i] = NULL;
+								  for (int j = i; j < 20; j++)
+								  {
+									  if (Player->player_board[j + 1] == NULL) break;
+									  Player->player_board[j] = Player->player_board[j + 1];
+								  }
+								  break;
 							  }
 						  }
 						  Player->haveBoard--;
@@ -2063,7 +2154,7 @@ void print_clear(void) {
 
 	clear(12, 138, 25);
 	clear(12, 30, 70); clear(13, 23, 70); clear(14, 25, 70); clear(15, 23, 70); clear(16, 30, 70);
-	clear(18, 25, 70); clear(19, 25, 70); clear(20, 30, 70); clear(21, 23, 70); clear(22, 25, 70);
+	clear(18, 25, 70); clear(19, 23, 70); clear(20, 30, 70); clear(21, 23, 70); clear(22, 25, 70);
 	clear(24, 30, 70); clear(25, 23, 70); clear(26, 25, 70); clear(27, 23, 70); clear(28, 30, 70);
 	clear(30, 25, 70); clear(31, 23, 70); clear(32, 30, 70); clear(33, 23, 70); clear(34, 25, 70);
 }
