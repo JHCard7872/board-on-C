@@ -384,7 +384,7 @@ int main(void) {
 		}
 	}
 	printWin();
-
+	system("pause");
 }
 
 void print_board(void) { // 보드판 출력
@@ -1751,7 +1751,7 @@ void build(struct board* _boardCell, struct player* Player) {
 	int select1 = 0;
 
 	if ((_boardCell + Player->location)->get_player->color == Player->color && (_boardCell + Player->location)->num != 35) {//땅의 소유주인 플레이어와 플레이하는 플레이어의 색깔이 같다면.
-		if ((_boardCell + Player->location)->build >= 1 && (_boardCell + Player->location)->build < 4) {//아무것도 안 지어져 있을 때.
+		if ((_boardCell + Player->location)->build >= 1 && (_boardCell + Player->location)->build < 5) {//아무것도 안 지어져 있을 때.
 			printf("건물을 업그레이드 하시겠습니까? y or n\n");
 			_kbhit();
 			select = _getch();
@@ -2206,10 +2206,10 @@ void gameover(struct player* Player) {
 }
 void Fund(struct player* p1) {
 	//18, 34
-
 	char buf[16] = { 0 };
 	char put[] = "k 지급";
 	char funding[] = "200k 투자";
+
 	_itoa(fund / 1000, buf, 10);
 	if (p1->location == 18) {
 		p1->money += fund;
@@ -2224,9 +2224,22 @@ void Fund(struct player* p1) {
 		fund += 200000;
 		printString(12, 138, 9, funding);
 	}
-	print_board();
-	Sleep(1500);
 	system("cls");
+	printBuild(&play[0]); // play0의 건물 가운데에 출력
+	printBuild(&play[1]);
+	printBuild(&play[2]);
+	printBuild(&play[3]);
+	movePlayer(&play[0], 1); // 플레이어 이동하는거 출력해줌(별모양으로)
+	movePlayer(&play[1], 2);
+	movePlayer(&play[2], 3);
+	movePlayer(&play[3], 4);
+
+	print_board();
+	int ch = getchar();
+	if (ch != 0)
+	{
+		system("cls");
+	}
 }
 
 void printBlue(void) {
