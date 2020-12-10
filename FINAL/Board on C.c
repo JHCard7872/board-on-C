@@ -250,7 +250,10 @@ void printWin(void);
 
 int main(void) {
 	int k;
-	
+	system("mode con:cols=40 lines=2");
+	system("pause");
+	intro();
+	system("mode con:cols=180 lines=80");
 	char Gameover[] = "Game Over";
 	srand((unsigned)time(NULL)); // ·£´ý
 	int m = 0;
