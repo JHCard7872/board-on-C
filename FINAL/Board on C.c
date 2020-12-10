@@ -250,10 +250,7 @@ void printWin(void);
 
 int main(void) {
 	int k;
-	system("mode con:cols=40 lines=2");
-	system("pause");
-	intro();
-	system("mode con:cols=180 lines=80");
+	
 	char Gameover[] = "Game Over";
 	srand((unsigned)time(NULL)); // 랜덤
 	int m = 0;
@@ -1053,7 +1050,6 @@ int Dice_Move(struct player* _player, int* i, int k) { // i >> 무인도를 위한 카�
 			if (target > 27 && target < 36) {
 				_player->money -= 200000;
 			}
-			Sleep(1500);
 			system("cls");
 			if (_player->location == 2 || _player->location == 6 || _player->location == 11 || _player->location == 15 || _player->location == 20 || _player->location == 25 || _player->location == 31) {
 				GoldenKey(_player);
@@ -1765,7 +1761,7 @@ void build(struct board* _boardCell, struct player* Player) {
 			printf("별장의 가격은 50k입니다. 정말로 건설하시겠습니까?  y or n\n");
 			_kbhit();
 			select1 = _getch();
-			if (select == 'y') {
+			if (select1 == 'y') {
 				if (Player->money < 50000) {
 					printf("돈이 모자랍니다.\n");
 					if (Player->haveBoard >= 1)
@@ -1787,7 +1783,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("별장의 가격은 100k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 100000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -1809,7 +1805,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("별장의 가격은 150k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 150000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -1831,7 +1827,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("별장의 가격은 200k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 200000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -1854,7 +1850,7 @@ void build(struct board* _boardCell, struct player* Player) {
 			printf("별장의 가격은 50k입니다. 정말로 건설하시겠습니까?  y or n\n");
 			_kbhit();
 			select1 = _getch();
-			if (select == 'y') {
+			if (select1 == 'y') {
 				if (Player->money < 50000) {
 					printf("돈이 모자랍니다.\n");
 					if (Player->haveBoard >= 1)
@@ -1876,7 +1872,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("별장의 가격은 100k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 100000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -1898,7 +1894,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("별장의 가격은 150k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 150000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -1920,7 +1916,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("별장의 가격은 200k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 200000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -1943,7 +1939,7 @@ void build(struct board* _boardCell, struct player* Player) {
 			printf("빌딩의 가격은 150k입니다. 정말로 건설하시겠습니까?  y or n\n");
 			_kbhit();
 			select1 = _getch();
-			if (select == 'y') {
+			if (select1 == 'y') {
 				if (Player->money < 150000) {
 					printf("돈이 모자랍니다.\n");
 					if (Player->haveBoard >= 1)
@@ -1965,7 +1961,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("빌딩의 가격은 300k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 300000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -1987,7 +1983,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("빌딩의 가격은 450k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 450000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -2009,7 +2005,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("빌딩의 가격은 600k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 600000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -2027,12 +2023,12 @@ void build(struct board* _boardCell, struct player* Player) {
 				  }
 			  }
 			  break;
-		case 4:if ((_boardCell + Player->location)->num > 0 && _boardCell->num < 9 &&
+		case 4:if ((_boardCell + Player->location)->num > 0 && (_boardCell + Player->location)->num < 9 &&
 			(_boardCell + Player->location)->num != 2 && (_boardCell + Player->location)->num != 6) {//2,6,9번 땅은 황금열쇠라서 제외.
 			printf("호텔의 가격은 250k입니다. 정말로 건설하시겠습니까?  y or n\n");
 			_kbhit();
 			select1 = _getch();
-			if (select == 'y') {
+			if (select1 == 'y') {
 				if (Player->money < 250000) {
 					printf("돈이 모자랍니다.\n");
 					if (Player->haveBoard >= 1)
@@ -2054,7 +2050,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("호텔의 가격은 500k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 500000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -2076,7 +2072,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("호텔의 가격은 750k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 750000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -2098,7 +2094,7 @@ void build(struct board* _boardCell, struct player* Player) {
 				  printf("호텔의 가격은 1000k입니다. 정말로 건설하시겠습니까?  y or n\n");
 				  _kbhit();
 				  select1 = _getch();
-				  if (select == 'y') {
+				  if (select1 == 'y') {
 					  if (Player->money < 1000000) {
 						  printf("돈이 모자랍니다.\n");
 						  if (Player->haveBoard >= 1)
@@ -2135,7 +2131,7 @@ void Pass(struct board* _boardCell, struct player* Player) {
 			(_boardCell + Player->location)->get_player->money += (_boardCell + Player->location)->pass_value;
 		}
 	}
-	if ((_boardCell + Player->location)->pass_value < Player->money)
+	else if ((_boardCell + Player->location)->pass_value < Player->money)
 	{
 		printf("통행료 지불! -%dk\n", (_boardCell + Player->location)->pass_value / 1000);
 
